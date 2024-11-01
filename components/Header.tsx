@@ -4,13 +4,14 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
-import { FiPlusCircle } from "react-icons/fi";
+import { FiPlusCircle, FiSun } from "react-icons/fi";
 import { GoArrowRight } from "react-icons/go";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { LiaSave } from "react-icons/lia";
+import { LuInbox, LuLogOut, LuMoonStar, LuTriangle } from "react-icons/lu";
 import { MdSearch } from "react-icons/md";
 import { RxSlash } from "react-icons/rx";
 import { SiVercel } from "react-icons/si";
@@ -18,13 +19,37 @@ import { SiVercel } from "react-icons/si";
 const Header = () => {
   const [hobby, setHobby] = useState<boolean>(false);
   const hobbyRef = useRef<HTMLDivElement>(null);
-  const [projectFind, setProjectFind] = useState<boolean>(true);
+  const [notification, setNotification] = useState<boolean>(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const [setting, setSetting] = useState<boolean>(false);
+  const settingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (hobbyRef.current && !hobbyRef.current.contains(event.target as Node)) {
-        console.log("aaa");
         setHobby(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
+        setNotification(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (settingRef.current && !settingRef.current.contains(event.target as Node)) {
+        setSetting(false);
       }
     };
 
@@ -67,7 +92,7 @@ const Header = () => {
             </button>
             <div
               ref={hobbyRef}
-              className={clsx('absolute left-0 top-10 translate-y-2 bg-[#000000] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
+              className={clsx('absolute left-0 top-10 translate-y-2 -translate-x-4 bg-[#000000] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
                 {
                   'hidden': !hobby,
 
@@ -144,7 +169,7 @@ const Header = () => {
                   <input type="text" placeholder="Find Project..." className="grow ml-2 px-0.5 py-[1px] bg-transparent text-[#a1a1a1] placeholder:text-[#a1a1a1] text-sm outline-none" />
                 </div>
                 <div className="border-t  border-[#ffffff24] p-2 flex items-center justify-center">
-                  
+
                 </div>
               </div>
             </div>
@@ -158,19 +183,118 @@ const Header = () => {
             <li className="hover:text-[#ededed]">Docs</li>
           </ul>
           <div className="flex items-center gap-2">
-            <button className="border hover:bg-[#1f1f1f] border-[#ffffff24] rounded-full w-8 h-8 flex items-center justify-center">
-              <IoNotificationsOutline className="w-5 h-auto text-[#a1a1a1] hover:text-[#ededed]" />
-            </button>
-            <button className="rounded-full border border-[#ffffff24] hover:bg-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed] w-8 h-8 flex justify-center items-center ">
-              <Image
-                src="/avatar1.svg"
-                alt="User Avatar"
-                width={32}
-                height={32}
-                className="hidden rounded-full lg:block"
-              />
-              <HiMenuAlt4 className="block w-5 h-auto lg:hidden" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setNotification(!notification)}
+
+                className={clsx('border hover:bg-[#1f1f1f] border-[#ffffff24] rounded-full w-8 h-8 flex items-center justify-center',
+                  {
+                    'bg-[#1f1f1f]': notification
+                  }
+                )}
+              >
+                <IoNotificationsOutline className="w-5 h-auto text-[#a1a1a1] hover:text-[#ededed]" />
+              </button>
+              <div
+                ref={notificationRef}
+                className={clsx('absolute right-0 top-10 translate-y-2 bg-[#000000] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
+                  {
+                    'hidden': !notification,
+
+                  })}
+              >
+                <div className="w-[400px] h-[500px] hover:bg-[#0a0a0a] rounded-2xl flex flex-col">
+                  <div className="flex items-center justify-start h-12 gap-6 px-4 text-[#a1a1a1]">
+                    <Link href="" className={clsx("border-b-2 border-[#ededed] h-[48px] flex items-center justify-center", {
+                    })}>
+                      <span className="px-1 leading-[14px] py-2 rounded-md hover:bg-[#1f1f1f] hover:text-[#ededed]">Inbox</span>
+                    </Link>
+                    <Link href="" className={clsx("border-b-2 hover:border-[#ededed] border-transparent h-[48px] flex items-center justify-center", {
+                    })}>
+                      <span className="px-1 leading-[14px] py-2 rounded-md hover:bg-[#1f1f1f] hover:text-[#ededed]">Archive</span>
+                    </Link>
+                    <Link href="" className={clsx("border-b-2 hover:border-[#ededed] border-transparent h-[48px] flex items-center justify-center", {
+                    })}>
+                      <span className="px-1 leading-[14px] py-2 rounded-md hover:bg-[#1f1f1f] hover:text-[#ededed]">Comments</span>
+                    </Link>
+                  </div>
+                  <div className="border-t  border-[#ffffff24] p-2 flex flex-col items-center justify-center h-full">
+                    <div className="w-12 h-12 rounded-full bg-[#1f1f1f] flex items-center justify-center">
+                      <LuInbox className="text-[#a1a1a1] w-[20px] h-auto" />
+                    </div>
+                    <span className="text-[#a1a1a1] mt-4">No new notifications</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => setSetting(!setting)}
+
+                className={clsx('rounded-full border border-[#ffffff24] hover:bg-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed] w-8 h-8 flex justify-center items-center ',
+                  {
+                    'bg-[#1f1f1f]': setting
+                  }
+                )}
+              >
+                <Image
+                  src="/avatar1.svg"
+                  alt="User Avatar"
+                  width={32}
+                  height={32}
+                  className="hidden rounded-full lg:block"
+                />
+                <HiMenuAlt4 className="block w-5 h-auto lg:hidden" />
+              </button>
+              <div
+                ref={settingRef}
+                className={clsx('absolute right-0 top-10 translate-y-2 bg-[#0a0a0a] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
+                  {
+                    'hidden': !setting,
+
+                  })}
+              >
+                <div className="w-[256px] rounded-2xl p-2 text-[#a1a1a1]">
+                  <div className="pt-4">
+                  </div>
+                  <Link href="" className="h-10 hover:bg-[#1f1f1f] w-full flex justify-start items-center rounded-md">
+                    <span className="px-2 hover:text-[#ededed]">Dashboard</span>
+                  </Link>
+                  <Link href="" className="h-10 hover:bg-[#1f1f1f] w-full flex justify-start items-center rounded-md">
+                    <span className="px-2 hover:text-[#ededed]">Account Settings</span>
+                  </Link>
+                  <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
+                    <span className="">Create Team</span>
+                    <FiPlusCircle className="w-5 h-5" />
+                  </Link>
+                  <div className="border-b border-[#ffffff24] my-2 -mx-2"></div>
+                  <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
+                    <span className="">Command Menu</span>
+                    <div className="flex gap-1">
+                      <p className="text-xs border border-[#ffffff24] p-1 rounded-md">Ctrl</p>
+                      <p className="text-xs border border-[#ffffff24] p-1 rounded-md">K</p>
+                    </div>
+                  </Link>
+                  <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
+                    <span className="">Theme</span>
+                    <div className="flex gap-2 border border-[#ffffff24] p-1 h-7 items-center  rounded-full">
+                      <LiaSave className="w-4 h-4" />
+                      <FiSun className="w-4 h-4" />
+                      <LuMoonStar className="w-4 h-4" />
+                    </div>
+                  </Link>
+                  <div className="border-b border-[#ffffff24] my-2 -mx-2"></div>
+                  <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
+                    <span className="">Home Page</span>
+                    <LuTriangle className="w-5 h-5" />
+                  </Link>
+                  <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
+                    <span className="">Log Out</span>
+                    <LuLogOut className="w-5 h-5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

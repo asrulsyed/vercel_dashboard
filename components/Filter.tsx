@@ -5,9 +5,11 @@ import { PiSquaresFour } from "react-icons/pi"
 const Filter = () => {
   return (
     <div className="flex gap-3">
-      <div className="grow bg-[#0a0a0a] flex items-center h-10 justify-between rounded-md border border-[#ffffff24] px-2.5  text-[#a1a1a1]">
-        <FaSearch />
-        <input type="text" className="w-full h-full bg-[#0a0a0a]" placeholder="Search Repositories and Projects..." />
+      <div className="grow bg-[#0a0a0a] flex items-center h-10 justify-between rounded-md border border-[#ffffff24]  text-[#a1a1a1] pr-2.5">
+        <div className="flex items-center justify-center w-10 h-10">
+          <FaSearch />
+        </div>
+        <input type="text" className="w-full h-full bg-[#0a0a0a] outline-none" placeholder="Search Repositories and Projects..." />
         <span className="px-1 py-1 w-[26px] border border-[#ffffff24] ml-1 rounded-md text-xs flex items-center justify-center">⌘</span>
         <span className="px-1 py-1 w-[26px] border border-[#ffffff24] ml-1 rounded-md text-xs flex items-center justify-center" >K</span>
       </div>

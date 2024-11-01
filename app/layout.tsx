@@ -36,7 +36,7 @@ export default function RootLayout({
           <SubMenu />
           {children}
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
