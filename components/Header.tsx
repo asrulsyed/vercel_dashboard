@@ -5,14 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
-import { FiPlusCircle, FiSun } from "react-icons/fi";
+import { FiPlusCircle } from "react-icons/fi";
 import { GoArrowRight } from "react-icons/go";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { LiaSave } from "react-icons/lia";
 import { LuInbox, LuLogOut, LuMoonStar, LuTriangle } from "react-icons/lu";
 import { MdSearch } from "react-icons/md";
+import { RiSaveFill, RiSunLine } from "react-icons/ri";
 import { RxSlash } from "react-icons/rx";
 import { SiVercel } from "react-icons/si";
 
@@ -23,6 +23,7 @@ const Header = () => {
   const notificationRef = useRef<HTMLDivElement>(null);
   const [setting, setSetting] = useState<boolean>(false);
   const settingRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState<number>(0);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -197,7 +198,7 @@ const Header = () => {
               </button>
               <div
                 ref={notificationRef}
-                className={clsx('absolute right-0 top-10 translate-y-2 bg-[#000000] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
+                className={clsx('absolute right-0 top-10 z-50 translate-y-2 bg-[#000000] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
                   {
                     'hidden': !notification,
 
@@ -248,7 +249,7 @@ const Header = () => {
               </button>
               <div
                 ref={settingRef}
-                className={clsx('absolute right-0 top-10 translate-y-2 bg-[#0a0a0a] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
+                className={clsx('absolute right-0 top-10 translate-y-2 z-50 bg-[#0a0a0a] text-[#ededed] rounded-2xl border border-[#ffffff24] text-sm flex',
                   {
                     'hidden': !setting,
 
@@ -277,10 +278,16 @@ const Header = () => {
                   </Link>
                   <Link href="" className="px-2 h-10 hover:bg-[#1f1f1f] hover:text-[#ededed] w-full flex justify-between items-center rounded-md">
                     <span className="">Theme</span>
-                    <div className="flex gap-2 border border-[#ffffff24] p-1 h-7 items-center  rounded-full">
-                      <LiaSave className="w-4 h-4" />
-                      <FiSun className="w-4 h-4" />
-                      <LuMoonStar className="w-4 h-4" />
+                    <div className="flex items-center justify-around w-24 h-8 gap-2 border border-[#ffffff24] rounded-full relative">
+                      <button className={clsx("w-8 h-8 rounded-full border flex items-center justify-center absolute left-0", { 'border-[#ffffff24]': theme === 0, 'border-transparent': theme !== 0 })} onClick={() => setTheme(0)}>
+                        <RiSaveFill className="w-4 h-4" />
+                      </button>
+                      <button className={clsx("w-8 h-8 rounded-full border flex items-center justify-center absolute ", { 'border-[#ffffff24]': theme === 1, 'border-transparent': theme !== 1 })} onClick={() => setTheme(1)}>
+                        <RiSunLine className="w-4 h-4" />
+                      </button>
+                      <button className={clsx("w-8 h-8 rounded-full border flex items-center justify-center absolute right-0", { 'border-[#ffffff24]': theme === 2, 'border-transparent': theme !== 2 })} onClick={() => setTheme(2)}>
+                        <LuMoonStar className="w-4 h-4" />
+                      </button>
                     </div>
                   </Link>
                   <div className="border-b border-[#ffffff24] my-2 -mx-2"></div>
